@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Cattle Data</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .delete-field {
+        color: red;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>Add Cattle Data</h1>
+      <form id="cattleForm" action="{{ url_for('main.submit') }}" method="POST">
+        <div id="formFields">
+          <!-- Default fields -->
+          <div class="form-group">
+            <div class="input-group">
+              <input
+                type="text"
+                name="nama"
+                class="form-control"
+                placeholder="Nama"
+                required
+              />
+              <button
+                type="button"
+                class="btn btn-danger delete-field"
+                onclick="deleteField(this)"
+                disabled
+              >
+                X
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <input
+                type="text"
+                name="jenis_sapi"
+                class="form-control"
+                placeholder="Jenis Sapi"
+                required
+              />
+              <button
+                type="button"
+                class="btn btn-danger delete-field"
+                onclick="deleteField(this)"
+                disabled
+              >
+                X
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <input
+                type="number"
+                name="usia_sapi"
+                class="form-control"
+                placeholder="Usia Sapi"
+                required
+              />
+              <button
+                type="button"
+                class="btn btn-danger delete-field"
+                onclick="deleteField(this)"
+                disabled
+              >
+                X
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary mb-3" onclick="addField()">
+          Tambah Field
+        </button>
+        <button type="submit" class="btn btn-success mb-3">Submit</button>
+        <a href="{{ url_for('main.index') }}" class="btn btn-secondary mb-3"
+          >Kembali</a
+        >
+      </form>
+    </div>
+
+    <script>
+      let fieldCount = 3; // Mulai dari 3 karena sudah ada 3 field default
+
+      function addField() {
+        fieldCount++;
+        const fieldsDiv = document.getElementById("formFields");
+        const newField = document.createElement("div");
+        newField.className = "form-group";
+        newField.innerHTML = `
+                <div class="input-group">
+                    <input type="text" name="field_${fieldCount}" class="form-control" placeholder="Field Baru">
+                    <button type="button" class="btn btn-danger delete-field" onclick="deleteField(this)">X</button>
+                </div>
+            `;
+        fieldsDiv.appendChild(newField);
+      }
+
+      function deleteField(button) {
+        const fieldGroup = button.parentElement.parentElement;
+        fieldGroup.remove();
+      }
+    </script>
+  </body>
+</html>

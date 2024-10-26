@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cattle Data</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Data Sapi</h1>
+        <a href="{{ url_for('main.add_form') }}" class="btn btn-primary"
+          >Tambah Data</a
+        >
+      </div>
+
+      <div class="row">
+        {% if data %} {% for item in data %}
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              {% if item.nama %}
+              <h5 class="card-title">{{ item.nama }}</h5>
+              {% endif %}
+
+              <div class="card-text">
+                {% for key, value in item.items() %} {% if key != '_id' and key
+                != 'nama' %}
+                <p>
+                  <strong>{{ key|replace('_', ' ')|title }}:</strong> {{ value
+                  }}
+                </p>
+                {% endif %} {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <p>Belum ada data</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
